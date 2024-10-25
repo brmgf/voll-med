@@ -14,7 +14,9 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,7 +39,7 @@ public class MedicoController {
 
     @GetMapping
     public ResponseEntity<PagedModel> listar(@PageableDefault(size = 2) Pageable pageable, PagedResourcesAssembler assembler) {
-        Page<DadosListagemMedico> page = repository.findAll(pageable).map(DadosListagemMedico::new);
+        Page<DadosListagemMedico> page = repository.findAllByAtivoTrue(pageable).map(DadosListagemMedico::new);
         return ResponseEntity.ok(assembler.toModel(page));
     }
 
@@ -46,5 +48,12 @@ public class MedicoController {
     public void atualizar(@RequestBody @Valid DadosAtualizacaoMedico dadosAtualizacaoMedico) {
         var medico = repository.getReferenceById(dadosAtualizacaoMedico.id());
         medico.atualizarInformacoes(dadosAtualizacaoMedico);
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void inativar(@PathVariable Long id) {
+        var medico = repository.getReferenceById(id);
+        medico.inativar();
     }
 }

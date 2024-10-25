@@ -49,6 +49,9 @@ public class Medico {
     private String telefone;
 
     @NotNull
+    private Boolean ativo;
+
+    @NotNull
     @Embedded
     private Endereco endereco;
 
@@ -58,6 +61,7 @@ public class Medico {
         this.crm = cadastroMedico.crm();
         this.especialidade = cadastroMedico.especialidade();
         this.telefone = cadastroMedico.telefone();
+        this.ativo = true;
         this.endereco = new Endereco(cadastroMedico.endereco());
     }
 
@@ -71,5 +75,9 @@ public class Medico {
         if (Objects.nonNull(dadosAtualizacaoMedico.endereco())) {
             this.endereco.atualizarInformacoes(dadosAtualizacaoMedico.endereco());
         }
+    }
+
+    public void inativar() {
+        this.ativo = false;
     }
 }
