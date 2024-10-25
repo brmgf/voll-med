@@ -1,0 +1,61 @@
+package med.voll.api.medico;
+
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import med.voll.api.endereco.Endereco;
+
+@Table(name = "medicos")
+@Entity(name = "medico")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
+public class Medico {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank
+    private String nome;
+
+    @NotBlank
+    private String email;
+
+    @NotBlank
+    private String crm;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Especialidade especialidade;
+
+    @NotBlank
+    private String telefone;
+
+    @NotNull
+    @Embedded
+    private Endereco endereco;
+
+    public Medico(DadosCadastroMedico cadastroMedico) {
+        this.nome = cadastroMedico.nome();
+        this.email = cadastroMedico.email();
+        this.crm = cadastroMedico.crm();
+        this.especialidade = cadastroMedico.especialidade();
+        this.telefone = cadastroMedico.telefone();
+        this.endereco = new Endereco(cadastroMedico.endereco());
+    }
+}
