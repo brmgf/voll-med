@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @Embeddable
 @Getter
 @Setter
@@ -29,5 +31,29 @@ public class Endereco {
         this.uf = endereco.uf();
         this.numero = endereco.numero();
         this.complemento = endereco.complemento();
+    }
+
+    public void atualizarInformacoes(DadosEndereco endereco) {
+        if (Objects.nonNull(endereco.logradouro())) {
+            this.logradouro = endereco.logradouro();
+        }
+        if (Objects.nonNull(endereco.bairro())) {
+            this.bairro = endereco.bairro();
+        }
+        if (Objects.nonNull(endereco.cep())) {
+            this.cep = endereco.cep();
+        }
+        if (Objects.nonNull(endereco.cidade())) {
+            this.cidade = endereco.cidade();
+        }
+        if (Objects.nonNull(endereco.uf())) {
+            this.uf = endereco.uf();
+        }
+        if (Objects.nonNull(endereco.numero())) {
+            this.numero = endereco.numero();
+        }
+        if (Objects.nonNull(endereco.complemento())) {
+            this.complemento = endereco.complemento();
+        }
     }
 }

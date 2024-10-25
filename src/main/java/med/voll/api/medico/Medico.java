@@ -17,6 +17,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import med.voll.api.endereco.Endereco;
 
+import java.util.Objects;
+
 @Table(name = "medicos")
 @Entity(name = "medico")
 @Getter
@@ -57,5 +59,17 @@ public class Medico {
         this.especialidade = cadastroMedico.especialidade();
         this.telefone = cadastroMedico.telefone();
         this.endereco = new Endereco(cadastroMedico.endereco());
+    }
+
+    public void atualizarInformacoes(DadosAtualizacaoMedico dadosAtualizacaoMedico) {
+        if (Objects.nonNull(dadosAtualizacaoMedico.nome())) {
+            this.nome = dadosAtualizacaoMedico.nome();
+        }
+        if (Objects.nonNull(dadosAtualizacaoMedico.telefone())) {
+            this.telefone = dadosAtualizacaoMedico.telefone();
+        }
+        if (Objects.nonNull(dadosAtualizacaoMedico.endereco())) {
+            this.endereco.atualizarInformacoes(dadosAtualizacaoMedico.endereco());
+        }
     }
 }
