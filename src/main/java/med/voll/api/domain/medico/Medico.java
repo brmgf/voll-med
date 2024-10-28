@@ -1,5 +1,6 @@
 package med.voll.api.domain.medico;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -34,12 +35,15 @@ public class Medico {
     private Long id;
 
     @NotBlank
+    @Column(length = 100)
     private String nome;
 
     @NotBlank
+    @Column(length = 100)
     private String email;
 
     @NotBlank
+    @Column(length = 6)
     private String crm;
 
     @NotNull
@@ -47,6 +51,7 @@ public class Medico {
     private Especialidade especialidade;
 
     @NotBlank
+    @Column(length = 20)
     private String telefone;
 
     @NotNull
