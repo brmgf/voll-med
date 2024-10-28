@@ -1,4 +1,4 @@
-package med.voll.api.paciente;
+package med.voll.api.domain.paciente;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import med.voll.api.endereco.Endereco;
+import med.voll.api.domain.endereco.Endereco;
 import med.voll.api.util.StringUtil;
 
 import java.util.Objects;
