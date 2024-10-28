@@ -6,14 +6,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import med.voll.api.domain.endereco.DadosEndereco;
 
-public record DadosCadastroPaciente(@NotBlank
+public record DadosCadastroPaciente(@NotBlank(message = "É obrigatório informar um nome.")
                                     String nome,
-                                    @Email
-                                    @NotBlank
+                                    @NotBlank(message = "É obrigatório informar um e-mail.")
+                                    @Email(message = "E-mail inválido, por favor, tente novamente.")
                                     String email,
-                                    @NotBlank
+                                    @NotBlank(message = "É obrigatório informar um telefone.")
                                     String telefone,
-                                    @NotBlank
+                                    @NotBlank(message = "É obrigatório informar o cpf.")
                                     String cpf,
                                     @Valid
                                     @NotNull
