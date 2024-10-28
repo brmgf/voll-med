@@ -16,6 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import med.voll.api.endereco.Endereco;
+import med.voll.api.util.StringUtil;
 
 import java.util.Objects;
 
@@ -66,10 +67,10 @@ public class Medico {
     }
 
     public void atualizarInformacoes(DadosAtualizacaoMedico dadosAtualizacaoMedico) {
-        if (Objects.nonNull(dadosAtualizacaoMedico.nome())) {
+        if (StringUtil.isTextoPreenchido(dadosAtualizacaoMedico.nome())) {
             this.nome = dadosAtualizacaoMedico.nome();
         }
-        if (Objects.nonNull(dadosAtualizacaoMedico.telefone())) {
+        if (StringUtil.isTextoPreenchido(dadosAtualizacaoMedico.telefone())) {
             this.telefone = dadosAtualizacaoMedico.telefone();
         }
         if (Objects.nonNull(dadosAtualizacaoMedico.endereco())) {

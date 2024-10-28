@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Objects;
+import med.voll.api.util.StringUtil;
 
 @Embeddable
 @Getter
@@ -34,25 +33,25 @@ public class Endereco {
     }
 
     public void atualizarInformacoes(DadosEndereco endereco) {
-        if (Objects.nonNull(endereco.logradouro())) {
+        if (StringUtil.isTextoPreenchido(endereco.logradouro())) {
             this.logradouro = endereco.logradouro();
         }
-        if (Objects.nonNull(endereco.bairro())) {
+        if (StringUtil.isTextoPreenchido(endereco.bairro())) {
             this.bairro = endereco.bairro();
         }
-        if (Objects.nonNull(endereco.cep())) {
+        if (StringUtil.isTextoPreenchido(endereco.cep())) {
             this.cep = endereco.cep();
         }
-        if (Objects.nonNull(endereco.cidade())) {
+        if (StringUtil.isTextoPreenchido(endereco.cidade())) {
             this.cidade = endereco.cidade();
         }
-        if (Objects.nonNull(endereco.uf())) {
+        if (StringUtil.isTextoPreenchido(endereco.uf())) {
             this.uf = endereco.uf();
         }
-        if (Objects.nonNull(endereco.numero())) {
+        if (StringUtil.isTextoPreenchido(endereco.numero())) {
             this.numero = endereco.numero();
         }
-        if (Objects.nonNull(endereco.complemento())) {
+        if (StringUtil.isTextoPreenchido(endereco.complemento())) {
             this.complemento = endereco.complemento();
         }
     }

@@ -34,7 +34,6 @@ public class MedicoController {
     @Transactional
     public ResponseEntity<DetalhesMedico> cadastrar(@RequestBody @Valid DadosCadastroMedico cadastroMedico, UriComponentsBuilder uriBuilder) {
         var novoMedico = repository.save(new Medico(cadastroMedico));
-
         var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(novoMedico.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new DetalhesMedico(novoMedico));
@@ -43,6 +42,7 @@ public class MedicoController {
     @GetMapping
     public ResponseEntity<Page<DadosListagemMedico>> listar(@PageableDefault(size = 2) Pageable pageable) {
         Page<DadosListagemMedico> page = repository.findAllByAtivoTrue(pageable).map(DadosListagemMedico::new);
+
         return ResponseEntity.ok(page);
     }
 
@@ -51,6 +51,7 @@ public class MedicoController {
     public ResponseEntity<DetalhesMedico> atualizar(@RequestBody @Valid DadosAtualizacaoMedico dadosAtualizacaoMedico) {
         var medico = repository.getReferenceById(dadosAtualizacaoMedico.id());
         medico.atualizarInformacoes(dadosAtualizacaoMedico);
+
         return ResponseEntity.ok(new DetalhesMedico(medico));
     }
 
@@ -59,6 +60,7 @@ public class MedicoController {
     public ResponseEntity inativar(@PathVariable Long id) {
         var medico = repository.getReferenceById(id);
         medico.inativar();
+
         return ResponseEntity.noContent().build();
     }
 
@@ -66,6 +68,7 @@ public class MedicoController {
     @Transactional
     public ResponseEntity<DetalhesMedico> detalhar(@PathVariable Long id) {
         var medico = repository.getReferenceById(id);
+
         return ResponseEntity.ok(new DetalhesMedico(medico));
     }
 }
