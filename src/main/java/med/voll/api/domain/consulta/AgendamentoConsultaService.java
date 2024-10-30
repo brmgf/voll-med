@@ -34,7 +34,7 @@ public class AgendamentoConsultaService {
         }
 
         validadores.forEach(v -> v.validar(agendamentoConsulta));
-        var consulta = new Consulta(null, medico, paciente, agendamentoConsulta.dataHora());
+        var consulta = new Consulta(medico, paciente, agendamentoConsulta.dataHora());
 
         return new DetalhesConsulta(repository.save(consulta));
     }

@@ -2,6 +2,8 @@ package med.voll.api.domain.consulta;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -49,4 +51,23 @@ public class Consulta {
     @NotNull
     @Column(name = "data_hora")
     private LocalDateTime dataHora;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private StatusConsulta status;
+
+    @Column(name = "motivo_cancelamento")
+    private String motivoCancelamento;
+
+    public Consulta(Medico medico, Paciente paciente, LocalDateTime dataHora) {
+        this.medico = medico;
+        this.paciente = paciente;
+        this.dataHora = dataHora;
+        this.status = StatusConsulta.ABERTA;
+    }
+
+    public void cancelar(String motivoCancelamento) {
+        this.status = StatusConsulta.CANCELADA;
+        this.motivoCancelamento = motivoCancelamento;
+    }
 }
