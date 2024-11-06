@@ -119,6 +119,11 @@ O usuário precisa estar autenticado para conseguir realizar as operações. A A
 
 ## Consultas
 ### Agendar
+* Uma consulta deve ser agendada com antecedência mínima de 30 minutos
+* O intervalo mínimo entre uma consulta e outra é de 1 hora
+* Não é possível agendar consultas antes das 7:00 e depois das 18:00 de segunda-feira aos sábados
+* Não é possível agendar consultas no domingo
+
 **POST/** localhost:8080/consultas
 **body:** 
 ```
@@ -130,6 +135,8 @@ O usuário precisa estar autenticado para conseguir realizar as operações. A A
 ```
 
 ### Cancelar
+* Uma consulta deve ser cancelada com antecedência mínima de 24 horas
+
 **DELETE/** localhost:8080/consultas
 **body:** 
 ```
