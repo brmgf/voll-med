@@ -13,7 +13,8 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
             "FROM consulta c " +
             "WHERE c.medico.id = :medicoId " +
             "AND DATE(c.dataHora) = DATE(:dataHora) " +
-            "AND c.dataHora BETWEEN :umaHoraAMenos AND :umaHoraAMais")
+            "AND c.dataHora > :umaHoraAMenos " +
+            "AND c.dataHora < :umaHoraAMais")
     boolean existeConsultaNoMesmoHorario(Long medicoId,
                                          LocalDateTime dataHora,
                                          LocalDateTime umaHoraAMenos,

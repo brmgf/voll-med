@@ -15,10 +15,10 @@ public class HorarioFuncionamentoClinicaValidator implements AgendamentoConsulta
         boolean isDomingo = dataHoraConsulta.getDayOfWeek().equals(DayOfWeek.SUNDAY);
         boolean isHorarioAntesAberturaClinica = dataHoraConsulta.getHour() < 7;
         boolean isHorarioAposAberturaClinica = dataHoraConsulta.getHour() > 18
-                || (dataHoraConsulta.getHour() == 18 && dataHoraConsulta.getMinute() != 0);
+                || (dataHoraConsulta.getHour() == 18 || (dataHoraConsulta.getMinute() != 0 && dataHoraConsulta.getSecond() != 0));
 
         if (isDomingo || isHorarioAntesAberturaClinica || isHorarioAposAberturaClinica) {
-            throw new NegocioException("A consulta deve estar marcada dentro do horário de funcionamento da clínica.");
+            throw new NegocioException("A consulta deve estar marcada dentro do horário de funcionamento da clínica, de segunda-feira ao sábado, das 7:00 às 19:00.");
         }
     }
 }
