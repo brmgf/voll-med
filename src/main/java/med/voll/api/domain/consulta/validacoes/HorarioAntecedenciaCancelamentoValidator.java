@@ -18,7 +18,7 @@ public class HorarioAntecedenciaCancelamentoValidator implements CancelamentoCon
     public void validar(DadosCancelamentoConsulta cancelamentoConsulta) {
         var consulta = consultaRepository.getReferenceById(cancelamentoConsulta.idConsulta());
         var dataHoraConsulta = consulta.getDataHora();
-        var dataHoraAtual = LocalDateTime.now();
+        var dataHoraAtual = LocalDateTime.now().withSecond(0).withNano(0);
         var diferencaEmHoras = Duration.between(dataHoraAtual, dataHoraConsulta).toHours();
 
         if (diferencaEmHoras < 24) {
