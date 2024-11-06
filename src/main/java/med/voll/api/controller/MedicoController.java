@@ -9,9 +9,9 @@ import med.voll.api.domain.medico.DadosListagemMedico;
 import med.voll.api.domain.medico.DetalhesMedico;
 import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.medico.MedicoRepository;
+import med.voll.api.domain.medico.MedicoService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +31,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class MedicoController {
 
     private final MedicoRepository repository;
+    private final MedicoService service;
 
     @PostMapping
     @Transactional
@@ -42,7 +43,7 @@ public class MedicoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosListagemMedico>> listar(@PageableDefault(size = 2) Pageable pageable) {
+    public ResponseEntity<Page<DadosListagemMedico>> listar(Pageable pageable) {
         Page<DadosListagemMedico> page = repository.findAllByAtivoTrue(pageable).map(DadosListagemMedico::new);
 
         return ResponseEntity.ok(page);
@@ -51,7 +52,7 @@ public class MedicoController {
     @PutMapping
     @Transactional
     public ResponseEntity<DetalhesMedico> atualizar(@RequestBody @Valid DadosAtualizacaoMedico dadosAtualizacaoMedico) {
-        var medico = repository.getReferenceById(dadosAtualizacaoMedico.id());
+        var medico = service.buscarPorId(dadosAtualizacaoMedico.id());
         medico.atualizarInformacoes(dadosAtualizacaoMedico);
 
         return ResponseEntity.ok(new DetalhesMedico(medico));
@@ -60,7 +61,7 @@ public class MedicoController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity inativar(@PathVariable Long id) {
-        var medico = repository.getReferenceById(id);
+        var medico = service.buscarPorId(id);
         medico.inativar();
 
         return ResponseEntity.noContent().build();
@@ -69,7 +70,7 @@ public class MedicoController {
     @GetMapping("/{id}")
     @Transactional
     public ResponseEntity<DetalhesMedico> detalhar(@PathVariable Long id) {
-        var medico = repository.getReferenceById(id);
+        var medico = service.buscarPorId(id);
 
         return ResponseEntity.ok(new DetalhesMedico(medico));
     }

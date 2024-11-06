@@ -9,9 +9,9 @@ import med.voll.api.domain.paciente.DadosListagemPaciente;
 import med.voll.api.domain.paciente.DetalhesPaciente;
 import med.voll.api.domain.paciente.Paciente;
 import med.voll.api.domain.paciente.PacienteRepository;
+import med.voll.api.domain.paciente.PacienteService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +31,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class PacienteController {
 
     private final PacienteRepository repository;
+    private final PacienteService service;
 
     @PostMapping
     @Transactional
@@ -42,7 +43,7 @@ public class PacienteController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosListagemPaciente>> listar(@PageableDefault(size = 2) Pageable pageable) {
+    public ResponseEntity<Page<DadosListagemPaciente>> listar(Pageable pageable) {
         Page<DadosListagemPaciente> page = repository.findAllByAtivoTrue(pageable).map(DadosListagemPaciente::new);
 
         return ResponseEntity.ok(page);
@@ -60,7 +61,7 @@ public class PacienteController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity inativar(@PathVariable Long id) {
-        var paciente = repository.getReferenceById(id);
+        var paciente = service.buscarPorId(id);
         paciente.inativar();
 
         return ResponseEntity.noContent().build();
@@ -68,7 +69,7 @@ public class PacienteController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DetalhesPaciente> detalhar(@PathVariable Long id) {
-        var paciente = repository.getReferenceById(id);
+        var paciente = service.buscarPorId(id);
 
         return ResponseEntity.ok(new DetalhesPaciente(paciente));
     }
