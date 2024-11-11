@@ -1,8 +1,8 @@
 package med.voll.api.domain.usuario;
 
-public record DetalhesUsuario(String login) {
+public record DetalhesUsuario(Long id, String login) {
 
     public DetalhesUsuario(Usuario usuario) {
-        this(usuario.getLogin());
+        this(usuario.getId(), usuario.getLogin());
     }
 }
