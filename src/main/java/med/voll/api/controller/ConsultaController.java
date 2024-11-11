@@ -34,7 +34,7 @@ public class ConsultaController {
     }
 
     @DeleteMapping
-    public ResponseEntity cancelar(@RequestBody @Valid DadosCancelamentoConsulta cancelamentoConsulta) {
+    public ResponseEntity<Void> cancelar(@RequestBody @Valid DadosCancelamentoConsulta cancelamentoConsulta) {
         cancelamentoConsultaService.cancelar(cancelamentoConsulta);
 
         return ResponseEntity.noContent().build();

@@ -8,7 +8,6 @@ import med.voll.api.domain.medico.DadosCadastroMedico;
 import med.voll.api.domain.medico.DadosListagemMedico;
 import med.voll.api.domain.medico.DetalhesMedico;
 import med.voll.api.domain.medico.Medico;
-import med.voll.api.domain.medico.MedicoRepository;
 import med.voll.api.domain.medico.MedicoService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,13 +29,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 public class MedicoController {
 
-    private final MedicoRepository repository;
     private final MedicoService service;
 
     @PostMapping
-    @Transactional
     public ResponseEntity<DetalhesMedico> cadastrar(@RequestBody @Valid DadosCadastroMedico cadastroMedico, UriComponentsBuilder uriBuilder) {
-        var novoMedico = repository.save(new Medico(cadastroMedico));
+        var novoMedico = service.salvar(new Medico(cadastroMedico));
         var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(novoMedico.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new DetalhesMedico(novoMedico));
@@ -44,7 +41,7 @@ public class MedicoController {
 
     @GetMapping
     public ResponseEntity<Page<DadosListagemMedico>> listar(Pageable pageable) {
-        Page<DadosListagemMedico> page = repository.findAllByAtivoTrue(pageable).map(DadosListagemMedico::new);
+        Page<DadosListagemMedico> page = service.buscarTodosAtivosComPaginacao(pageable).map(DadosListagemMedico::new);
 
         return ResponseEntity.ok(page);
     }
@@ -60,7 +57,7 @@ public class MedicoController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity inativar(@PathVariable Long id) {
+    public ResponseEntity<Void> inativar(@PathVariable Long id) {
         var medico = service.buscarPorId(id);
         medico.inativar();
 
@@ -68,7 +65,6 @@ public class MedicoController {
     }
 
     @GetMapping("/{id}")
-    @Transactional
     public ResponseEntity<DetalhesMedico> detalhar(@PathVariable Long id) {
         var medico = service.buscarPorId(id);
 
