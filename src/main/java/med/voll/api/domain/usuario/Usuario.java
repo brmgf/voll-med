@@ -12,6 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import med.voll.api.util.StringUtil;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,6 +39,11 @@ public class Usuario implements UserDetails {
 
     @NotBlank
     private String senha;
+
+    public Usuario(DadosCadastroUsuario cadastroUsuario) {
+        this.login = cadastroUsuario.login();
+        this.senha = StringUtil.criptografar(cadastroUsuario.senha());
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
