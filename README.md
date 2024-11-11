@@ -2,11 +2,24 @@
 API Rest desenvolvida durante a trilha de formação Java e Spring Boot da [Alura](https://www.alura.com.br/);
 
 A API possui as funcionalidades de cadastramento, consulta e inativação de médicos e pacientes, agendamento e cancelamento de consultas.
-O usuário precisa estar autenticado para conseguir realizar as operações. A API também fica disponível na interface do [Swagger](http://localhost:8080/swagger-ui/index.html).
+O usuário precisa estar autenticado para conseguir realizar as operações. A API também fica disponível no [Swagger](http://localhost:8080/swagger-ui/index.html).
+
+## Usuários
+### Cadastrar
+**POST/** localhost:8080/usuarios
+
+**body:** 
+```
+{
+    "login": "admin.vollmed",
+    "senha": 123456
+}
+```
 
 ## Autenticação
 ### Login
 **POST/** localhost:8080/login
+
 **body:** 
 ```
 {
@@ -24,6 +37,7 @@ O usuário precisa estar autenticado para conseguir realizar as operações. A A
 
 ### Cadastrar
 **POST/** localhost:8080/medicos
+
 **body:** 
 ```
 {
@@ -46,6 +60,7 @@ O usuário precisa estar autenticado para conseguir realizar as operações. A A
 
 ### Atualizar
 **PUT/** localhost:8080/medicos
+
 **body:** 
 ```
 {
@@ -76,6 +91,7 @@ O usuário precisa estar autenticado para conseguir realizar as operações. A A
 
 ### Cadastrar
 **POST/** localhost:8080/pacientes
+
 **body:** 
 ```
 {
@@ -96,6 +112,7 @@ O usuário precisa estar autenticado para conseguir realizar as operações. A A
 
 ### Atualizar
 **PUT/** localhost:8080/pacientes
+
 **body:** 
 ```
 {
@@ -125,6 +142,7 @@ O usuário precisa estar autenticado para conseguir realizar as operações. A A
 * Não é possível agendar consultas no domingo
 
 **POST/** localhost:8080/consultas
+
 **body:** 
 ```
 {
@@ -138,6 +156,7 @@ O usuário precisa estar autenticado para conseguir realizar as operações. A A
 * Uma consulta deve ser cancelada com antecedência mínima de 24 horas
 
 **DELETE/** localhost:8080/consultas
+
 **body:** 
 ```
 {
