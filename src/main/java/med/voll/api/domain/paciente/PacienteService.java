@@ -25,11 +25,12 @@ public class PacienteService {
 
     @Transactional(readOnly = true)
     public Paciente buscarPorId(Long id) {
-        return repository.findById(id).orElseThrow(() -> new NegocioException("Paciente não encontrado"));
+        return repository.findById(id).orElseThrow(() -> new NegocioException("Paciente não encontrado."));
     }
 
+    @Transactional(readOnly = true)
     public Paciente buscarAtivoPorId(Long id) {
-        var paciente = repository.findById(id).orElseThrow(() -> new NegocioException("Paciente não encontrado"));
+        var paciente = repository.findById(id).orElseThrow(() -> new NegocioException("Paciente não encontrado."));
         if (Boolean.FALSE.equals(paciente.getAtivo())) {
             throw new NegocioException("O paciente informado está inativo.");
         }

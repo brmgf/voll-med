@@ -27,7 +27,7 @@ public class ConsultaController {
 
     @PostMapping
     public ResponseEntity<DetalhesConsulta> agendar(@RequestBody @Valid DadosAgendamentoConsulta agendamentoConsulta, UriComponentsBuilder uriBuilder) {
-        var novaConsulta = agendamentoConsultaService.agendar(agendamentoConsulta);
+        var novaConsulta = new DetalhesConsulta(agendamentoConsultaService.agendar(agendamentoConsulta));
         var uri = uriBuilder.path("/consultas/{id}").buildAndExpand(novaConsulta.id()).toUri();
 
         return ResponseEntity.created(uri).body(novaConsulta);

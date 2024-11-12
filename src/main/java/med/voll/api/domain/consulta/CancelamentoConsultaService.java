@@ -20,6 +20,7 @@ public class CancelamentoConsultaService {
         validadores.forEach(v -> v.validar(cancelamentoConsulta));
         var consulta = repository.findById(cancelamentoConsulta.idConsulta()).orElseThrow(
                 () -> new NegocioException("Consulta não encontrada."));
+
         consulta.cancelar(cancelamentoConsulta.motivoCancelamento());
     }
 }

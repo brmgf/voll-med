@@ -1,6 +1,7 @@
 package med.voll.api.domain.endereco;
 
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,12 +15,24 @@ import med.voll.api.util.StringUtil;
 @NoArgsConstructor
 public class Endereco {
 
+    @NotBlank
     private String logradouro;
+
+    @NotBlank
     private String bairro;
+
+    @NotBlank
     private String cep;
+
+    @NotBlank
     private String cidade;
+
+    @NotBlank
     private String uf;
+
+    @NotBlank
     private String numero;
+
     private String complemento;
 
     public Endereco(DadosEndereco endereco) {
