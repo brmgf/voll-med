@@ -1,10 +1,9 @@
 package med.voll.api.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import med.voll.api.controller.openapi.ConsultaControllerOpenApi;
 import med.voll.api.domain.consulta.AgendamentoConsultaService;
 import med.voll.api.domain.consulta.CancelamentoConsultaService;
 import med.voll.api.domain.consulta.DadosAgendamentoConsulta;
@@ -18,17 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@Tag(name = "Consultas", description = "Agenda consultas")
 @SecurityRequirement(name = "bearer-key")
 @RequiredArgsConstructor
 @RequestMapping("/consultas")
 @RestController
-public class ConsultaController {
+public class ConsultaController implements ConsultaControllerOpenApi {
 
     private final AgendamentoConsultaService agendamentoConsultaService;
     private final CancelamentoConsultaService cancelamentoConsultaService;
 
-    @Operation(summary = "Agendar", description = "Este endpoint realiza o agendamento de uma consulta.")
     @PostMapping
     public ResponseEntity<DetalhesConsulta> agendar(@RequestBody @Valid DadosAgendamentoConsulta agendamentoConsulta, UriComponentsBuilder uriBuilder) {
         var novaConsulta = new DetalhesConsulta(agendamentoConsultaService.agendar(agendamentoConsulta));
@@ -37,7 +34,6 @@ public class ConsultaController {
         return ResponseEntity.created(uri).body(novaConsulta);
     }
 
-    @Operation(summary = "Cancelar", description = "Este endpoint realiza o cancelamento de uma consulta.")
     @DeleteMapping
     public ResponseEntity<Void> cancelar(@RequestBody @Valid DadosCancelamentoConsulta cancelamentoConsulta) {
         cancelamentoConsultaService.cancelar(cancelamentoConsulta);

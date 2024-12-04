@@ -1,12 +1,11 @@
 package med.voll.api.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import med.voll.api.controller.openapi.PacienteControllerOpenApi;
 import med.voll.api.domain.paciente.DadosAtualizacaoPaciente;
 import med.voll.api.domain.paciente.DadosCadastroPaciente;
 import med.voll.api.domain.paciente.DadosListagemPaciente;
@@ -26,16 +25,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@Tag(name = "Pacientes", description = "Gerencia as operações de cadastramento e detalhamento de pacientes")
 @SecurityRequirement(name = "bearer-key")
 @RequiredArgsConstructor
 @RequestMapping("/pacientes")
 @RestController
-public class PacienteController {
+public class PacienteController implements PacienteControllerOpenApi {
 
     private final PacienteService service;
 
-    @Operation(summary = "Listar", description = "Este endpoint lista os pacientes ativos.")
     @GetMapping
     public ResponseEntity<Page<DadosListagemPaciente>> listar(Pageable pageable) {
         Page<DadosListagemPaciente> page = service.buscarTodosAtivosComPaginacao(pageable)
@@ -44,7 +41,6 @@ public class PacienteController {
         return ResponseEntity.ok(page);
     }
 
-    @Operation(summary = "Detalhar", description = "Este endpoint busca os detalhes de um paciente.")
     @GetMapping("/{id}")
     public ResponseEntity<DetalhesPaciente> detalhar(@Parameter(description = "Identificador único do paciente", example = "7683") @PathVariable Long id) {
         var paciente = service.buscarPorId(id);
@@ -52,7 +48,6 @@ public class PacienteController {
         return ResponseEntity.ok(new DetalhesPaciente(paciente));
     }
 
-    @Operation(summary = "Cadastrar", description = "Este endpoint realiza o cadastro de um paciente.")
     @PostMapping
     public ResponseEntity<DetalhesPaciente> cadastrar(@RequestBody @Valid DadosCadastroPaciente cadastroPaciente, UriComponentsBuilder uriBuilder) {
         var novoPaciente = service.salvar(new Paciente(cadastroPaciente));
